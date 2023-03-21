@@ -1,0 +1,108 @@
+mysql> describe Trip;
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| trip_id          | int  | NO   | PRI | NULL    |       |
+| pickup_location  | text | YES  |     | NULL    |       |
+| dropoff_location | text | YES  |     | NULL    |       |
+| trip_date        | date | YES  |     | NULL    |       |
+| pet_id           | int  | YES  | MUL | NULL    |       |
+| driver_id        | int  | YES  | MUL | NULL    |       |
+| service_id       | int  | YES  | MUL | NULL    |       |
++------------------+------+------+-----+---------+-------+
+7 rows in set (0.03 sec)
+
+mysql> describe Customer ;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| customer_id  | int  | NO   | PRI | NULL    |       |
+| first_name   | text | YES  |     | NULL    |       |
+| last_name    | text | YES  |     | NULL    |       |
+| phone_number | text | YES  |     | NULL    |       |
+| email        | text | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> describe Service;
++---------------------+---------------+------+-----+---------+-------+
+| Field               | Type          | Null | Key | Default | Extra |
++---------------------+---------------+------+-----+---------+-------+
+| service_id          | int           | NO   | PRI | NULL    |       |
+| service_name        | text          | YES  |     | NULL    |       |
+| service_description | text          | YES  |     | NULL    |       |
+| service_price       | decimal(10,0) | YES  |     | NULL    |       |
++---------------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> Describe Pet;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| pet_id      | int  | NO   | PRI | NULL    |       |
+| pet_name    | text | YES  |     | NULL    |       |
+| pet_type    | text | YES  |     | NULL    |       |
+| customer_id | int  | YES  | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> Describe Driver;
+\+-----------------------+------+------+-----+---------+-------+
+| Field                 | Type | Null | Key | Default | Extra |
++-----------------------+------+------+-----+---------+-------+
+| driver_id             | int  | NO   | PRI | NULL    |       |
+| first_name            | text | YES  |     | NULL    |       |
+| last_name             | text | YES  |     | NULL    |       |
+| phone_number          | text | YES  |     | NULL    |       |
+| email                 | text | YES  |     | NULL    |       |
+| driver_license_number | text | YES  |     | NULL    |       |
++-----------------------+------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+ 
+
+ 
+
+ 
+
+mysql> select Customer.first_name,Customer.phone_number,Pet.pet_name,Pet.pet_type from Customer inner join Pet on Customer.customer_id = Pet.customer_id;
++------------+--------------+----------+----------+
+| first_name | phone_number | pet_name | pet_type |
++------------+--------------+----------+----------+
+| Vikas      | 555-1234     | Max      | Dog      |
+| Random1.   | 555-5678     | Fluffy   | Cat      |
+| Ramdom2    | 555-9101     | Buddy    | Dog      |
+| Prince     | 555-1212     | Simba    | Lion     |
+| Mike       | 555-2323     | Lucky    | Fish     |
++------------+--------------+----------+----------+
+5 rows in set (0.00 sec)
+
+ 
+
+mysql> select Driver.first_name,Driver.driver_license_number,Trip.pickup_location,Trip.dropoff_location from Driver right join Trip on Driver.driver_id=Trip.driver_id;
++------------+-----------------------+-----------------+------------------+
+| first_name | driver_license_number | pickup_location | dropoff_location |
++------------+-----------------------+-----------------+------------------+
+| Mary       | 2345678               | 123 Main St     | 456 Elm St       |
+| Ketton     | 4567890               | 789 Oak St      | 1011 Pine St     |
+| Aman       | 1234567               | 1213 Maple St   | 1415 Cedar St    |
+| Chris      | 5678901               | 1617 Walnut St  | 1819 Chestnut St |
+| Zach       | 3456789               | 2021 Pine St    | 2223 Oak St      |
++------------+-----------------------+-----------------+------------------+
+5 rows in set (0.00 sec)
+
+ 
+
+mysql> select Pet.pet_name,Trip.trip_date,Trip.dropoff_location from Pet right join Trip on Pet.pet_id = Trip.pet_id;
++----------+------------+------------------+
+| pet_name | trip_date  | dropoff_location |
++----------+------------+------------------+
+| Max      | 2023-03-20 | 456 Elm St       |
+| Buddy    | 2023-03-20 | 1011 Pine St     |
+| Lucky    | 2023-03-20 | 1415 Cedar St    |
+| Fluffy   | 2023-03-20 | 1819 Chestnut St |
+| Simba    | 2023-03-20 | 2223 Oak St      |
++----------+------------+------------------+
+5 rows in set (0.00 sec)
+
+ 
